@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class DungeonGenerator : MonoBehaviour
 {
+
+    public int maxEnemies = 2; // Max aantal vijanden
+
     private int width, height;
     private int maxRoomSize, minRoomSize;
     private int maxRooms;
@@ -24,6 +27,11 @@ public class DungeonGenerator : MonoBehaviour
     public void SetMaxRooms(int max)
     {
         maxRooms = max;
+    }
+
+    public void SetMaxEnemies(int max)
+    {
+        maxEnemies = max;
     }
 
     public void Generate()
@@ -75,9 +83,18 @@ public class DungeonGenerator : MonoBehaviour
                 TunnelBetween(rooms[rooms.Count - 1], room);
             }
 
+            PlaceEnemies(room, maxEnemies);
+
+            // Place enemies in rooms
+            foreach (Room currentRoom in rooms)
+            {
+                PlaceEnemies(currentRoom, maxEnemies);
+            }
+
             rooms.Add(room);
+
         }
-        var player = MapManager.Get.CreateActor("Player", rooms[0].Center());
+        var player = GameManager.Get.CreateActor("Player", rooms[0].Center());
     }
 
     private bool TrySetWallTile(Vector3Int pos)
@@ -145,4 +162,27 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
     }
+    private void PlaceEnemies(Room room, int maxEnemies)
+    {
+        // Plaats willekeurig een aantal vijanden in de kamer
+        int num = Random.Range(0, maxEnemies + 1);
+
+        for (int counter = 0; counter < num; counter++)
+        {
+            // Plaats vijanden op willekeurige posities in de kamer
+            int x = Random.Range(room.X + 1, room.X + room.Width - 1);
+            int y = Random.Range(room.Y + 1, room.Y + room.Height - 1);
+
+            // Maak verschillende vijanden aan op basis van willekeurige keuze
+            if (Random.value < 0.5f)
+            {
+                GameManager.Get.CreateActor("Ghost", new Vector2(x, y));
+            }
+            else
+            {
+                GameManager.Get.CreateActor("Spider", new Vector2(x, y));
+            }
+        }
+    }
 }
+     
