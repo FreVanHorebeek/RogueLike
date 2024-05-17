@@ -156,9 +156,9 @@ MonoBehaviour:
   FloorMap: {fileID: 1849172296}
   ObstacleMap: {fileID: 1578167248}
   FogMap: {fileID: 1410258482}
-  FloorTile: {fileID: 11400000, guid: 879241c3143ece9469f9cd0994bdc56c, type: 2}
+  FloorTile: {fileID: 11400000, guid: a8be01a7cfef02b4999c178ce8d705e0, type: 2}
   WallTile: {fileID: 11400000, guid: fc3fdcbed6c33ae449ea35227f0c4eea, type: 2}
-  FogTile: {fileID: 11400000, guid: a8be01a7cfef02b4999c178ce8d705e0, type: 2}
+  FogTile: {fileID: 11400000, guid: 879241c3143ece9469f9cd0994bdc56c, type: 2}
   VisibleTiles: []
   width: 80
   height: 45
@@ -557,7 +557,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e9d814d41812e47b8511f231aea3e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemies: []
 --- !u!4 &1684302755
 Transform:
   m_ObjectHideFlags: 0

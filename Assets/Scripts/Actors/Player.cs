@@ -14,6 +14,7 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
 
     private void Start()
     {
+        GameManager.Get.Player = GetComponent<Actor>();
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, -5);
     }
 
