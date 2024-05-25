@@ -21,15 +21,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        Player = GetComponent<Actor>();
-        if (Player == null)
-        {
-            Debug.LogError("Player Actor component is not assigned.");
-        }
-    }
-
     public static GameManager Get { get => instance; }
 
     public void AddEnemy(Actor enemy)
@@ -46,48 +37,26 @@ public class GameManager : MonoBehaviour
     public GameObject CreateActor(string name, Vector2 position)
     {
         GameObject actor = Instantiate(Resources.Load<GameObject>($"Prefabs/{name}"), new Vector3(position.x + 0.5f, position.y + 0.5f, 0), Quaternion.identity);
-
-        if (actor == null)
-        {
-            Debug.LogError($"Prefab for {name} could not be loaded.");
-            return null;
-        }
-
-        Actor actorComponent = actor.GetComponent<Actor>();
-        if (actorComponent == null)
-        {
-            Debug.LogError("Actor component is missing on the instantiated prefab.");
-            return null;
-        }
-
-        if (name == "Player")
-        {
-            Player = actorComponent;
-        }
-        else
-        {
-            AddEnemy(actorComponent);
-        }
-
         actor.name = name;
         return actor;
     }
 
     public Actor GetActorAtLocation(Vector3 location)
     {
-        if (Player != null && Player.transform.position == location)
+        if (Player.transform.position == location)
         {
             return Player;
         }
-
-        foreach (var enemy in Enemies)
+        else
         {
-            if (enemy != null && enemy.transform.position == location)
+            foreach (Actor enemy in Enemies)
             {
-                return enemy;
+                if (enemy.transform.position == location)
+                {
+                    return enemy;
+                }
             }
         }
-
         return null;
     }
 
@@ -103,27 +72,5 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public class Action
-    {
-        static private void EndTurn(Actor actor)
-        {
-            if (actor.GetComponent<Player>() != null)
-            {
-                GameManager.Get.StartEnemyTurn();
-            }
-        }
-
-        static public void Move(Actor actor, Vector2 direction)
-        {
-            Actor target = GameManager.Get.GetActorAtLocation(actor.transform.position + (Vector3)direction);
-
-            if (target == null)
-            {
-                actor.Move(direction);
-                actor.UpdateFieldOfView();
-            }
-
-            EndTurn(actor);
-        }
-    }
+    
 }

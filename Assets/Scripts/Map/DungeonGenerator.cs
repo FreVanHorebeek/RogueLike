@@ -164,16 +164,16 @@ public class DungeonGenerator : MonoBehaviour
     }
     private void PlaceEnemies(Room room, int maxEnemies)
     {
-        // Plaats willekeurig een aantal vijanden in de kamer
+        // the number of enemies we want
         int num = Random.Range(0, maxEnemies + 1);
 
         for (int counter = 0; counter < num; counter++)
         {
-            // Plaats vijanden op willekeurige posities in de kamer
+            // The borders of the room are walls, so add and substract by 1
             int x = Random.Range(room.X + 1, room.X + room.Width - 1);
             int y = Random.Range(room.Y + 1, room.Y + room.Height - 1);
 
-            // Maak verschillende vijanden aan op basis van willekeurige keuze
+            // create different enemies
             if (Random.value < 0.5f)
             {
                 GameManager.Get.CreateActor("Ghost", new Vector2(x, y));
