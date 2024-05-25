@@ -1,13 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
-
-    public Actor Player { get; set; }
-
-    public List<Actor> Enemies { get; private set; } = new List<Actor>();
 
     private void Awake()
     {
@@ -23,22 +20,36 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Get { get => instance; }
 
-    public void AddEnemy(Actor enemy)
-    {
-        if (enemy == null)
-        {
-            Debug.LogError("Attempted to add null enemy to the GameManager.");
-            return;
-        }
-
-        Enemies.Add(enemy);
-    }
+    public Actor Player;
+    public List<Actor> Enemies = new List<Actor>();
 
     public GameObject CreateActor(string name, Vector2 position)
     {
         GameObject actor = Instantiate(Resources.Load<GameObject>($"Prefabs/{name}"), new Vector3(position.x + 0.5f, position.y + 0.5f, 0), Quaternion.identity);
         actor.name = name;
         return actor;
+    }
+
+    public void AddEnemy(Actor enemy)
+    {
+        Enemies.Add(enemy);
+    }
+
+    public void RemoveEnemy(Actor enemy)
+    {
+        if (Enemies.Contains(enemy))
+        {
+            Enemies.Remove(enemy);
+            Destroy(enemy.gameObject);
+        }
+    }
+
+    public void StartEnemyTurn()
+    {
+        foreach (var enemy in Enemies)
+        {
+            enemy.GetComponent<Enemy>().RunAI();
+        }
     }
 
     public Actor GetActorAtLocation(Vector3 location)
@@ -59,18 +70,4 @@ public class GameManager : MonoBehaviour
         }
         return null;
     }
-
-    public void StartEnemyTurn()
-    {
-        foreach (var enemy in Enemies)
-        {
-            Enemy enemyComponent = enemy.GetComponent<Enemy>();
-            if (enemyComponent != null)
-            {
-                enemyComponent.RunAI();
-            }
-        }
-    }
-
-    
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7002376653784114007}
   - component: {fileID: 6280985721697589631}
   - component: {fileID: 6283001292123677960}
+  - component: {fileID: 7193019139543027733}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Untagged
@@ -100,6 +101,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FieldOfView: []
   FieldOfViewRange: 8
+  maxHitPoints: 16
+  hitPoints: 16
+  defense: 1
+  power: 4
 --- !u!114 &6283001292123677960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,5 +115,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d38b65b46a134814da41b8aeae84d1e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+  IsFighting: 0
+--- !u!114 &7193019139543027733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5862696143038824932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af028bd8c61434a4f8119d19adbf4b0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
