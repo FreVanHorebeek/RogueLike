@@ -29,18 +29,15 @@ public class Enemy : MonoBehaviour
         }
 
         Vector3 targetPosition = Target.transform.position;
-        float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+        float distance = Vector3.Distance(transform.position, targetPosition);
 
-        if (distanceToTarget < 1.5f)
+        if (distance < 1.5f)
         {
-            // If the distance is less than 1.5 units, perform the attack
             Action.Hit(GetComponent<Actor>(), Target);
-            IsFighting = true; // Assuming the enemy is fighting when attacking
         }
         else
         {
-            // Continue moving towards the target
-            var gridPosition = MapManager.Get.FloorMap.WorldToCell(targetPosition);
+            Vector3Int gridPosition = MapManager.Get.FloorMap.WorldToCell(targetPosition);
             MoveAlongPath(gridPosition);
         }
     }

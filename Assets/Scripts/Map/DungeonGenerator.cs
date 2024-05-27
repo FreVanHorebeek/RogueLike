@@ -9,6 +9,7 @@ public class DungeonGenerator : MonoBehaviour
     private int maxRoomSize, minRoomSize;
     private int maxRooms;
     private int maxEnemies;
+    private int maxItems; // Toegevoegd
 
     List<Room> rooms = new List<Room>();
 
@@ -34,6 +35,10 @@ public class DungeonGenerator : MonoBehaviour
         maxEnemies = max;
     }
 
+    public void SetMaxItems(int max) // Toegevoegd
+    {
+        maxItems = max;
+    }
     public void Generate()
     {
         rooms.Clear();
@@ -48,13 +53,11 @@ public class DungeonGenerator : MonoBehaviour
 
             var room = new Room(roomX, roomY, roomWidth, roomHeight);
 
-          
             if (room.Overlaps(rooms))
             {
                 continue;
             }
 
-           
             for (int x = roomX; x < roomX + roomWidth; x++)
             {
                 for (int y = roomY; y < roomY + roomHeight; y++)
@@ -73,16 +76,15 @@ public class DungeonGenerator : MonoBehaviour
                     {
                         SetFloorTile(new Vector3Int(x, y, 0));
                     }
-
                 }
             }
 
-           
             if (rooms.Count != 0)
             {
                 TunnelBetween(rooms[rooms.Count - 1], room);
             }
             PlaceEnemies(room, maxEnemies);
+            PlaceItems(room, maxItems); // Plaats items in de kamer
             rooms.Add(room);
         }
         var player = GameManager.Get.CreateActor("Player", rooms[0].Center());
@@ -90,14 +92,12 @@ public class DungeonGenerator : MonoBehaviour
 
     private bool TrySetWallTile(Vector3Int pos)
     {
-        
         if (MapManager.Get.FloorMap.GetTile(pos))
         {
             return false;
         }
         else
         {
-            
             MapManager.Get.ObstacleMap.SetTile(pos, MapManager.Get.WallTile);
             return true;
         }
@@ -105,12 +105,10 @@ public class DungeonGenerator : MonoBehaviour
 
     private void SetFloorTile(Vector3Int pos)
     {
-
         if (MapManager.Get.ObstacleMap.GetTile(pos))
         {
             MapManager.Get.ObstacleMap.SetTile(pos, null);
         }
-
         MapManager.Get.FloorMap.SetTile(pos, MapManager.Get.FloorTile);
     }
 
@@ -122,21 +120,17 @@ public class DungeonGenerator : MonoBehaviour
 
         if (Random.value < 0.5f)
         {
-         
             tunnelCorner = new Vector2Int(newRoomCenter.x, oldRoomCenter.y);
         }
         else
         {
-        
             tunnelCorner = new Vector2Int(oldRoomCenter.x, newRoomCenter.y);
         }
 
-      
         List<Vector2Int> tunnelCoords = new List<Vector2Int>();
         BresenhamLine.Compute(oldRoomCenter, tunnelCorner, tunnelCoords);
         BresenhamLine.Compute(tunnelCorner, newRoomCenter, tunnelCoords);
 
-      
         for (int i = 0; i < tunnelCoords.Count; i++)
         {
             SetFloorTile(new Vector3Int(tunnelCoords[i].x, tunnelCoords[i].y));
@@ -174,6 +168,18 @@ public class DungeonGenerator : MonoBehaviour
             {
                 GameManager.Get.CreateActor("Spider", new Vector2(x, y));
             }
+        }
+    }
+    private void PlaceItems(Room room, int maxItems)
+    {
+        int numItems = Random.Range(0, maxItems + 1);
+
+        for (int i = 0; i < numItems; i++)
+        {
+            int x = Random.Range(room.X + 1, room.X + room.Width - 1);
+            int y = Random.Range(room.Y + 1, room.Y + room.Height - 1);
+
+            GameManager.Get.CreateItem("Healthpotion", new Vector2(x, y));
         }
     }
 }

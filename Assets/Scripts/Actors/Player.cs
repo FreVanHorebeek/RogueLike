@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour, Controls.IPlayerActions
 {
     private Controls controls;
-    
 
     private void Awake()
     {
@@ -40,14 +39,14 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
 
     public void OnExit(InputAction.CallbackContext context)
     {
-        
+        // Add your exit logic here if needed
     }
 
     private void Move()
     {
         Vector2 direction = controls.Player.Movement.ReadValue<Vector2>();
-        Vector2 roundedDirection = new Vector2(Mathf.Round(direction.x), Mathf.Round(direction.y));
-        Debug.Log("roundedDirection");
+        Vector3 roundedDirection = new Vector3(Mathf.Round(direction.x), Mathf.Round(direction.y), 0);
+        Debug.Log("roundedDirection: " + roundedDirection);
         Action.MoveOrHit(GetComponent<Actor>(), roundedDirection);
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, -5);
     }

@@ -53,18 +53,20 @@ public class Actor : MonoBehaviour
 
     private void Die()
     {
-        string message;
         if (GetComponent<Player>())
         {
-            message = "You died!";
-            UIManager.Instance.AddMessage(message, Color.red);
+            UIManager.Instance.AddMessage("You died!", Color.red);
         }
         else
         {
-            message = $"{name} is dead!";
-            UIManager.Instance.AddMessage(message, Color.green);
-            GameObject remains = GameManager.Get.CreateActor("Gravestone", transform.position);
-            remains.name = $"Remains of {name}";
+            UIManager.Instance.AddMessage($"{name} is dead!", Color.green);
+        }
+
+        GameObject remains = GameManager.Get.CreateActor("Dead", transform.position);
+        remains.name = $"Remains of {name}";
+
+        if (!GetComponent<Player>())
+        {
             GameManager.Get.RemoveEnemy(this);
         }
 

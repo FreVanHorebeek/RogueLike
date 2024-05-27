@@ -227,6 +227,7 @@ MonoBehaviour:
   roomMinSize: 6
   maxRooms: 30
   maxEnemies: 2
+  maxItems: 2
 --- !u!156049354 &408639669
 Grid:
   m_ObjectHideFlags: 0
@@ -729,6 +730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
   Enemies: []
+  Items: []
 --- !u!4 &1684302755
 Transform:
   m_ObjectHideFlags: 0

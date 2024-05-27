@@ -1,4 +1,4 @@
-using System.Collections;
+using Items;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     public Actor Player;
     public List<Actor> Enemies = new List<Actor>();
+    public List<Consumable> Items = new List<Consumable>();
 
     public GameObject CreateActor(string name, Vector2 position)
     {
@@ -66,6 +67,41 @@ public class GameManager : MonoBehaviour
                 {
                     return enemy;
                 }
+            }
+        }
+        return null;
+    }
+
+    // New Methods for Consumable Items
+    public void AddItem(Consumable item)
+    {
+        Items.Add(item);
+    }
+
+    public void RemoveItem(Consumable item)
+    {
+        if (Items.Contains(item))
+        {
+            Items.Remove(item);
+            Destroy(item.gameObject);
+        }
+    }
+
+    public GameObject CreateItem(string itemName, Vector2 position)
+    {
+        GameObject item = Instantiate(Resources.Load<GameObject>($"Prefabs/{itemName}"), new Vector3(position.x + 0.5f, position.y + 0.5f, 0), Quaternion.identity);
+        item.name = itemName;
+        return item;
+    }
+
+
+    public Consumable GetItemAtLocation(Vector3 location)
+    {
+        foreach (Consumable item in Items)
+        {
+            if (item.transform.position == location)
+            {
+                return item;
             }
         }
         return null;

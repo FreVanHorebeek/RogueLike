@@ -103,7 +103,7 @@ MonoBehaviour:
   FieldOfViewRange: 8
   maxHitPoints: 16
   hitPoints: 16
-  defense: 1
+  defense: 2
   power: 4
 --- !u!114 &6283001292123677960
 MonoBehaviour:

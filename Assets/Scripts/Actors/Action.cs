@@ -2,43 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Action : MonoBehaviour
+public static class Action
 {
-    static public void MoveOrHit(Actor actor, Vector2 direction)
+    public static void MoveOrHit(Actor actor, Vector3 direction)
     {
-        Vector3 direction3D = new Vector3(direction.x, direction.y, 0); // Convert Vector2 to Vector3
-        if (MapManager.Get.IsWalkable(actor.transform.position + direction3D))
+        Vector3 targetPosition = actor.transform.position + direction;
+        Actor target = GameManager.Get.GetActorAtLocation(targetPosition);
+
+        if (target == null)
         {
             Move(actor, direction);
         }
         else
         {
-            Hit(actor, GameManager.Get.GetActorAtLocation(actor.transform.position + direction3D));
+            Hit(actor, target);
         }
     }
 
-    static private void Move(Actor actor, Vector2 direction)
+    public static void Move(Actor actor, Vector3 direction)
     {
         actor.Move(direction);
         actor.UpdateFieldOfView();
     }
 
-    static public void Hit(Actor actor, Actor target)
+    public static void Hit(Actor actor, Actor target)
     {
         int damage = actor.Power - target.Defense;
-        string message = $"{actor.name} hits {target.name}";
-
         if (damage > 0)
         {
             target.DoDamage(damage);
-            message += $" for {damage} damage";
+            UIManager.Instance.AddMessage($"{actor.name} hits {target.name} for {damage} damage!", actor.GetComponent<Player>() ? Color.white : Color.red);
         }
         else
         {
-            message += " but does no damage";
+            UIManager.Instance.AddMessage($"{actor.name} hits {target.name} but does no damage.", actor.GetComponent<Player>() ? Color.white : Color.red);
         }
-
-        Color color = (actor.GetComponent<Player>() != null) ? Color.white : Color.red;
-        UIManager.Instance.AddMessage(message, color);
     }
 }
