@@ -10,6 +10,11 @@ public class UIManager : MonoBehaviour
     public GameObject HealthBar;
     public GameObject Messages;
 
+    public GameObject inventory;
+
+    public InventoryUI InventoryUI { get => inventory.GetComponent<InventoryUI>(); }
+    
+
     private void Awake()
     {
         if (Instance == null)

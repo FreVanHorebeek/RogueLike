@@ -179,7 +179,21 @@ public class DungeonGenerator : MonoBehaviour
             int x = Random.Range(room.X + 1, room.X + room.Width - 1);
             int y = Random.Range(room.Y + 1, room.Y + room.Height - 1);
 
-            GameManager.Get.CreateItem("Healthpotion", new Vector2(x, y));
+            // Willekeurig een itemnaam selecteren met behulp van een if-statement
+
+            if (Random.value < 0.33f)
+            {
+                GameManager.Get.CreateItem("Healthpotion", new Vector2(x, y));
+            }
+            else if (Random.value < 0.66f)
+            {
+                GameManager.Get.CreateItem("Fireball", new Vector2(x, y));
+            }
+            else
+            {
+                GameManager.Get.CreateItem("ScrollOfConfusion", new Vector2(x, y));
+            }
         }
     }
+
 }

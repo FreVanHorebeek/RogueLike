@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 703090249501162473}
   - component: {fileID: -7736295973533420220}
   m_Layer: 0
-  m_Name: Scroll of confusion
+  m_Name: ScrollOfConfusion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

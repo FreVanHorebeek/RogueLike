@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; background-color: rgb(0, 0, 143);">
+        <ui:Label tabindex="-1" text="Inventory&#10;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Inventory" style="left: auto; align-items: center; justify-content: flex-start; align-self: center; bottom: auto; top: 3%; font-size: 28px; color: rgb(255, 255, 255);" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Item1" style="align-self: center; color: rgb(255, 255, 255);" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Item2" style="align-self: center; color: rgb(255, 255, 255);" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Item3" style="align-self: center; color: rgb(255, 255, 255);" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Item4" style="align-self: center; color: rgb(255, 255, 255);" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Item5" style="align-self: center; color: rgb(255, 255, 255);" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Item6" style="align-self: center; color: rgb(255, 255, 255);" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Item7" style="align-self: center; color: rgb(255, 255, 255);" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Item8" style="align-self: center; color: rgb(255, 255, 255);" />
+    </ui:VisualElement>
+</ui:UXML>

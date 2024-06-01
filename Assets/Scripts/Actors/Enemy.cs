@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     public Actor Target;
     public bool IsFighting = false;
     private AStar algorithm;
+    private int confused = 0;
 
     private void Start()
     {
@@ -28,6 +29,13 @@ public class Enemy : MonoBehaviour
             Target = GameManager.Get.Player;
         }
 
+        if (confused > 0)
+        {
+            confused--;
+            UIManager.Instance.AddMessage($"{name} is confused and cannot act", Color.yellow);
+            return;
+        }
+
         Vector3 targetPosition = Target.transform.position;
         float distance = Vector3.Distance(transform.position, targetPosition);
 
@@ -40,5 +48,10 @@ public class Enemy : MonoBehaviour
             Vector3Int gridPosition = MapManager.Get.FloorMap.WorldToCell(targetPosition);
             MoveAlongPath(gridPosition);
         }
+    }
+
+    public void Confuse()
+    {
+        confused = 8;
     }
 }

@@ -26,7 +26,11 @@ public class GameManager : MonoBehaviour
 
     public GameObject CreateActor(string name, Vector2 position)
     {
-        GameObject actor = Instantiate(Resources.Load<GameObject>($"Prefabs/{name}"), new Vector3(position.x + 0.5f, position.y + 0.5f, 0), Quaternion.identity);
+        GameObject actor = Instantiate(Resources.Load<GameObject>($"Prefabs/{name}"), new Vector3(position.x, position.y, 0), Quaternion.identity);
+        if (actor == null)
+        {
+            Debug.LogError($"Failed to create actor: {name}");
+        }
         actor.name = name;
         return actor;
     }
@@ -55,7 +59,7 @@ public class GameManager : MonoBehaviour
 
     public Actor GetActorAtLocation(Vector3 location)
     {
-        if (Player.transform.position == location)
+        if (Player != null && Player.transform.position == location)
         {
             return Player;
         }
@@ -72,7 +76,6 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
-    // New Methods for Consumable Items
     public void AddItem(Consumable item)
     {
         Items.Add(item);
@@ -89,11 +92,14 @@ public class GameManager : MonoBehaviour
 
     public GameObject CreateItem(string itemName, Vector2 position)
     {
-        GameObject item = Instantiate(Resources.Load<GameObject>($"Prefabs/{itemName}"), new Vector3(position.x + 0.5f, position.y + 0.5f, 0), Quaternion.identity);
+        GameObject item = Instantiate(Resources.Load<GameObject>($"Prefabs/{itemName}"), new Vector3(position.x, position.y, 0), Quaternion.identity);
+        if (item == null)
+        {
+            Debug.LogError($"Failed to create item: {itemName}");
+        }
         item.name = itemName;
         return item;
     }
-
 
     public Consumable GetItemAtLocation(Vector3 location)
     {
@@ -105,5 +111,17 @@ public class GameManager : MonoBehaviour
             }
         }
         return null;
+    }
+    public List<Actor> GetNearbyEnemies(Vector3 location)
+    {
+        List<Actor> nearbyEnemies = new List<Actor>();
+        foreach (var enemy in Enemies)
+        {
+            if (Vector3.Distance(enemy.transform.position, location) < 5)
+            {
+                nearbyEnemies.Add(enemy);
+            }
+        }
+        return nearbyEnemies;
     }
 }

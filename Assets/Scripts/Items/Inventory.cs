@@ -7,9 +7,15 @@ public class Inventory : MonoBehaviour
     public List<Consumable> Items = new List<Consumable>();
     public int MaxItems;
 
+    // Property to check if the inventory is full
+    public bool IsFull
+    {
+        get { return Items.Count >= MaxItems; }
+    }
+
     public bool AddItem(Consumable item)
     {
-        if (Items.Count < MaxItems)
+        if (!IsFull)
         {
             Items.Add(item);
             return true;
