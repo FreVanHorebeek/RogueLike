@@ -9,6 +9,11 @@ public class Enemy : MonoBehaviour
     private AStar algorithm;
     private int confused = 0;
 
+    public int HitPoints;
+    public int Power;
+    public int Defense;
+    public int XPReward;
+
     private void Start()
     {
         GameManager.Get.AddEnemy(GetComponent<Actor>());

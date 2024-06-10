@@ -13,11 +13,17 @@ public class Actor : MonoBehaviour
     [SerializeField] private int hitPoints;
     [SerializeField] private int defense;
     [SerializeField] private int power;
+    [SerializeField] private int level;
+    [SerializeField] private int xp;
+    [SerializeField] private int xpToNextLevel;
 
-    public int MaxHitPoints { get => maxHitPoints; }
-    public int HitPoints { get => hitPoints; }
-    public int Defense { get => defense; }
-    public int Power { get => power; }
+    public int MaxHitPoints { get => maxHitPoints; set => maxHitPoints = value; }
+    public int HitPoints { get => hitPoints; set => hitPoints = value; }
+    public int Defense { get => defense; set => defense = value; }
+    public int Power { get => power; set => power = value; }
+    public int Level { get => level; set => level = value; }
+    public int XP { get => xp; set => xp = value; }
+    public int XPToNextLevel { get => xpToNextLevel; set => xpToNextLevel = value; }
 
     private void Start()
     {
@@ -27,6 +33,8 @@ public class Actor : MonoBehaviour
         if (GetComponent<Player>())
         {
             UIManager.Instance.UpdateHealth(hitPoints, maxHitPoints);
+            HealthBar.Instance.SetLevel(level);
+            HealthBar.Instance.SetXP(xp);
         }
     }
 
@@ -73,7 +81,7 @@ public class Actor : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void DoDamage(int hp)
+    public void DoDamage(int hp, Actor attacker)
     {
         hitPoints -= hp;
         if (hitPoints < 0) hitPoints = 0;
@@ -86,6 +94,11 @@ public class Actor : MonoBehaviour
         if (hitPoints == 0)
         {
             Die();
+
+            if (attacker != null && attacker.GetComponent<Player>())
+            {
+                attacker.AddXp(XP);
+            }
         }
     }
 
@@ -99,5 +112,27 @@ public class Actor : MonoBehaviour
             UIManager.Instance.UpdateHealth(hitPoints, maxHitPoints);
             UIManager.Instance.AddMessage($"You were healed for {healedHP} HP!", Color.green);
         }
+    }
+
+    public void AddXp(int xp)
+    {
+        this.xp += xp;
+        while (this.xp >= xpToNextLevel)
+        {
+            LevelUp();
+        }
+        HealthBar.Instance.SetXP(this.xp);
+    }
+
+    private void LevelUp()
+    {
+        level++;
+        xpToNextLevel = Mathf.FloorToInt(xpToNextLevel * 1.5f);
+        maxHitPoints += 10;
+        defense += 2;
+        power += 2;
+
+        HealthBar.Instance.SetLevel(level);
+        UIManager.Instance.AddMessage($"Congratulations! You've reached level {level}!", Color.yellow);
     }
 }

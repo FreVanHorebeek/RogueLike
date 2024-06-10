@@ -1,8 +1,8 @@
+using Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class MapManager : MonoBehaviour
 {
@@ -37,7 +37,6 @@ public class MapManager : MonoBehaviour
     public List<Vector3Int> VisibleTiles;
     public Dictionary<Vector3Int, TileData> Tiles;
 
-
     [Header("Map Settings")]
     public int width = 80;
     public int height = 45;
@@ -46,6 +45,7 @@ public class MapManager : MonoBehaviour
     public int maxRooms = 30;
     public int maxEnemies = 2;
     public int maxItems = 2;
+    public int floor = 0; // Add floor variable
 
     private void Start()
     {
@@ -69,8 +69,6 @@ public class MapManager : MonoBehaviour
         AddTileMapToDictionary(ObstacleMap);
         SetupFogMap();
     }
-
-
 
     public bool InBounds(int x, int y) => 0 <= x && x < width && 0 <= y && y < height;
 
@@ -144,5 +142,45 @@ public class MapManager : MonoBehaviour
             FogMap.SetColor(pos, Color.clear);
             VisibleTiles.Add(pos);
         }
+    }
+
+    public void MoveUp()
+    {
+        ClearFloor(); // Clear the current floor data
+        floor++; // Increment the floor number
+        GenerateDungeon(); // Generate the next floor
+    }
+
+    public void MoveDown()
+    {
+        ClearFloor(); // Clear the current floor data
+        floor--; // Decrement the floor number
+        GenerateDungeon(); // Generate the previous floor
+    }
+
+    private void ClearFloor()
+    {
+        // Clear all objects and data related to the current floor
+        foreach (var enemy in FindObjectsOfType<Enemy>())
+        {
+            Destroy(enemy.gameObject);
+        }
+        foreach (var item in FindObjectsOfType<Consumable>())
+        {
+            Destroy(item.gameObject);
+        }
+        foreach (var ladder in FindObjectsOfType<Ladder>())
+        {
+            Destroy(ladder.gameObject);
+        }
+        foreach (var tombstone in FindObjectsOfType<Tombstone>()) // Add this loop to destroy tombstones
+        {
+            Destroy(tombstone.gameObject);
+        }
+
+        GameManager.Get.Enemies.Clear(); // Clear enemy list
+        GameManager.Get.Items.Clear(); // Clear item list
+        GameManager.Get.Ladders.Clear(); // Clear ladder list
+        GameManager.Get.Tombstones.Clear(); // Clear tombstone list
     }
 }

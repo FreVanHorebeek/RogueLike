@@ -19,34 +19,4 @@ namespace Items
             GameManager.Get.AddItem(this);
         }
     }
-
-    public class HealthPotion : Consumable
-    {
-        public int HealAmount;
-
-        private void Start()
-        {
-            HealAmount = 20;
-        }
-    }
-
-    public class Fireball : Consumable
-    {
-        public int Damage;
-
-        private void Start()
-        {
-            Damage = 20;
-        }
-    }
-
-    public class ScrollOfConfusion : Consumable
-    {
-        // Je kunt hier specifieke eigenschappen en methodes toevoegen voor ScrollOfConfusion
-
-        private void Start()
-        {
-            // Initialiseer eventuele eigenschappen
-        }
-    }
 }

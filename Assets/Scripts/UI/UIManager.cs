@@ -9,11 +9,9 @@ public class UIManager : MonoBehaviour
     [Header("Documents")]
     public GameObject HealthBar;
     public GameObject Messages;
-
     public GameObject inventory;
 
     public InventoryUI InventoryUI { get => inventory.GetComponent<InventoryUI>(); }
-    
 
     private void Awake()
     {
@@ -27,24 +25,57 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    // Start is called before the first frame update
+
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
 
     }
+
     public void UpdateHealth(int current, int max)
     {
         HealthBar.GetComponent<HealthBar>().SetValues(current, max);
     }
 
+    public void SetPlayerLevel(int level) // Voeg deze functie toe
+    {
+        HealthBar.GetComponent<HealthBar>().SetLevel(level);
+    }
+
+    public void SetPlayerXP(int xp) // Voeg deze functie toe
+    {
+        HealthBar.GetComponent<HealthBar>().SetXP(xp);
+    }
+
     public void AddMessage(string message, Color color)
     {
         Messages.GetComponent<Messages>().AddMessage(message, color);
+    }
+
+    public FloorInfo floorInfo;
+
+    public void InitializeFloorInfo(FloorInfo info)
+    {
+        floorInfo = info;
+    }
+
+    public void UpdateFloorText(int floorNumber)
+    {
+        if (floorInfo != null)
+        {
+            floorInfo.SetFloor(floorNumber);
+        }
+    }
+
+    public void UpdateEnemiesLeftText(int enemiesCount)
+    {
+        if (floorInfo != null)
+        {
+            floorInfo.SetEnemiesLeft(enemiesCount);
+        }
     }
 }

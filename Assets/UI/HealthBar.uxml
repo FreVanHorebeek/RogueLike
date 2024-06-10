@@ -4,5 +4,9 @@
             <ui:VisualElement name="HealthBar" style="flex-grow: 1; background-color: rgba(0, 255, 0, 0); position: absolute; left: 0; top: 0; bottom: 0; width: 50%; color: rgb(255, 0, 0);" />
             <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HealthText" style="background-color: rgba(0, 255, 0, 0); color: rgb(255, 255, 255);" />
         </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1;">
+            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LevelText" />
+            <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="XPLevel" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

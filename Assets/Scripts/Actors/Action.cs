@@ -30,7 +30,7 @@ public static class Action
         int damage = actor.Power - target.Defense;
         if (damage > 0)
         {
-            target.DoDamage(damage);
+            target.DoDamage(damage, actor); // 'actor' is de aanvaller
             UIManager.Instance.AddMessage($"{actor.name} hits {target.name} for {damage} damage!", actor.GetComponent<Player>() ? Color.white : Color.red);
         }
         else
